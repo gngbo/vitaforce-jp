@@ -1155,15 +1155,15 @@
 
                 <select class="city-select" required id="modal-ciudad">
                     <option value="">Ciudad</option>
-                    <option value="la-paz">La Paz</option>
-                    <option value="santa-cruz">Santa Cruz</option>
-                    <option value="cochabamba">Cochabamba</option>
-                    <option value="sucre">Sucre</option>
-                    <option value="potosi">Potosí</option>
-                    <option value="tarija">Tarija</option>
-                    <option value="oruro">Oruro</option>
-                    <option value="beni">Beni</option>
-                    <option value="pando">Pando</option>
+                    <option value="La Paz">La Paz</option>
+                    <option value="Santa Cruz">Santa Cruz</option>
+                    <option value="Cochabamba">Cochabamba</option>
+                    <option value="Sucre">Sucre</option>
+                    <option value="Potosi">Potosí</option>
+                    <option value="Tarija">Tarija</option>
+                    <option value="Oruro">Oruro</option>
+                    <option value="Beni">Beni</option>
+                    <option value="Pando">Pando</option>
                 </select>
 
                 <textarea class="form-textarea" id="modal-comentario" placeholder="Comentario (opcional)"
@@ -1448,7 +1448,7 @@
                 <input type="text" id="nombres" class="form-input" placeholder="Nombre y Apellido" required>
 
                 <div class="phone-input-group">
-                    <select class="country-select">
+                    <select class="country-select" id="country-select">
                         <option value="+591">🇧🇴 +591</option>
                         <option value="+54">🇦🇷 +54</option>
                         <option value="+56">🇨🇱 +56</option>
@@ -1459,15 +1459,15 @@
 
                 <select class="city-select" required id="ciudad">
                     <option value="">Ciudad</option>
-                    <option value="la-paz">La Paz</option>
-                    <option value="santa-cruz">Santa Cruz</option>
-                    <option value="cochabamba">Cochabamba</option>
-                    <option value="sucre">Sucre</option>
-                    <option value="potosi">Potosí</option>
-                    <option value="tarija">Tarija</option>
-                    <option value="oruro">Oruro</option>
-                    <option value="beni">Beni</option>
-                    <option value="pando">Pando</option>
+                    <option value="La Paz">La Paz</option>
+                    <option value="Santa Cruz">Santa Cruz</option>
+                    <option value="Cochabamba">Cochabamba</option>
+                    <option value="Sucre">Sucre</option>
+                    <option value="Potosi">Potosí</option>
+                    <option value="Tarija">Tarija</option>
+                    <option value="Oruro">Oruro</option>
+                    <option value="Beni">Beni</option>
+                    <option value="Pando">Pando</option>
                 </select>
 
                 <textarea class="form-textarea" id="comentario" placeholder="Comentario" rows="3"></textarea>
@@ -1661,6 +1661,7 @@
             const telefono = document.getElementById('modal-telefono').value;
             const ciudad = document.getElementById('modal-ciudad').value;
             const comentario = document.getElementById('modal-comentario').value;
+            const codigo = document.getElementById('modal-country').value;
 
             try {
                 const myHeaders = new Headers();
@@ -1669,7 +1670,7 @@
 
                 const raw = JSON.stringify({
                     "nombres": nombres,
-                    "telefono": telefono,
+                    "telefono": codigo + " " + telefono,
                     "departamento": ciudad,
                     "comentario": comentario,
                 });
@@ -1684,8 +1685,7 @@
                     mode: "no-cors"
                 };
                 // fetch("http://192.168.2.1:30051/rest/campana/me_interesa/3ecfe8db-31cc-4d02-9176-414b6f43ce8c", requestOptions) //prueba servisofts
-                fetch("https://crm.servisofts.com/http/rest/campana/me_interesa/3ecfe8db-31cc-4d02-9176-414b6f43ce8c", requestOptions)
-                    // fetch("https://crm.servisofts.com/http/rest/campana/me_interesa/dd7b2b70-0bd0-4877-bdb1-149f272a30e6", requestOptions)
+                fetch("https://crm.servisofts.com/http/rest/campana/me_interesa/dd7b2b70-0bd0-4877-bdb1-149f272a30e6", requestOptions) //producción
                     .then(response => response.text())
                     .then((result) => {
                         console.log("Respuesta del servidor:", result);
@@ -1739,6 +1739,7 @@
             const telefono = document.getElementById('telefono').value;
             const ciudad = document.getElementById('ciudad').value;
             const comentario = document.getElementById('comentario').value;
+            const codigo = document.getElementById('country-select').value;
 
             try {
                 const myHeaders = new Headers();
@@ -1747,7 +1748,7 @@
 
                 const raw = JSON.stringify({
                     "nombres": nombres,
-                    "telefono": telefono,
+                    "telefono": codigo + " " + telefono,
                     "departamento": ciudad,
                     "comentario": comentario,
                 });
@@ -1760,17 +1761,23 @@
                     mode: "no-cors"
                 };
 
-                // fetch("https://crm.servisofts.com/http/rest/campana/me_interesa/dd7b2b70-0bd0-4877-bdb1-149f272a30e6", requestOptions)
-                fetch("http://192.168.2.1:30051/rest/campana/me_interesa/3ecfe8db-31cc-4d02-9176-414b6f43ce8c", requestOptions) //prueba servisofts
-                    .then((response) => response.text())
-                    .then((result) => console.log(result))
-                    .catch((error) => console.error(error));
+                // fetch("http://192.168.2.1:30051/rest/campana/me_interesa/3ecfe8db-31cc-4d02-9176-414b6f43ce8c", requestOptions) //prueba servisofts
+                fetch("https://crm.servisofts.com/http/rest/campana/me_interesa/dd7b2b70-0bd0-4877-bdb1-149f272a30e6", requestOptions) //producción
+                    .then(response => response.text())
+                    .then((result) => {
+                        console.log("Respuesta del servidor:", result);
+                        alert('¡Gracias por registrarte! Un operador se pondrá en contacto contigo pronto para confirmar tu pedido con 50% de descuento.');
+                        event.target.reset();
+                        closeModal();
+                    })
+                    .catch((error) => {
+                        alert('Teléfono inválido. Revisa el número ingresado.');
+                        console.error(error)
+                    });
             } catch (error) {
                 console.error("Error en el envío:", error);
             }
 
-            alert('¡Gracias por registrarte! Un operador se pondrá en contacto contigo pronto para confirmar tu pedido con 50% de descuento.');
-            event.target.reset();
         }
 
         function toggleFAQ(button) {
